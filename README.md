@@ -21,7 +21,7 @@ switch:
     payload_off: "off"
 
   - platform: mqtt
-    name: "Dani Light"
+    name: "Light"
     command_topic: "home/bedroom/set/light"
     state_topic: "home/bedroom/light"
     qos: 1
