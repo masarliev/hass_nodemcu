@@ -1,6 +1,7 @@
-# nodemcu pir, dht and switches
+### Micropython library for nodemcu IOT devices
+Used to send/receive mqtt messages and control nodemcu
 
-Example home-assistant configuration
+#### Example home-assistant configuration
 
 ```yaml
 binary_sensor:
@@ -10,6 +11,12 @@ binary_sensor:
     payload_off: "off"
     name: "Motion"
     device_class: motion
+  - platform: mqtt
+    state_topic: "home/bedroom/available"
+    payload_on: "on"
+    payload_off: "off"
+    name: "esp8266"
+    device_class: connectivity
 switch:
   - platform: mqtt
     name: "Fan"

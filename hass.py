@@ -16,6 +16,7 @@ class Hass(object):
         self.client = MQTTClient(self.room, self.BROKER_HOST, 1883,
                                  self.BROKER_USER, self.BROKER_PASS)
         self.client.set_callback(self.mqtt_callback)
+        self.client.set_last_will('home/%s/available' % room, 'off', retain=True, qos=1)
         self._connect()
         self._sensors = []
         for item in sensors:
@@ -64,6 +65,7 @@ class Hass(object):
                 self.client.connect()
                 self.client.subscribe("home/%s/set#" % self.room, 1)
                 self._isconnected = True
+                self._send('home/%s/available' % self.room, 'on')
             except OSError:
                 utime.sleep(self.DELAY)
 
@@ -76,7 +78,7 @@ class Hass(object):
 
     def _send(self, topic, message):
         try:
-            self.client.publish(topic, message, qos=1)
+            self.client.publish(topic, message, retain=True, qos=1)
         except OSError:
             self._connect()
 
